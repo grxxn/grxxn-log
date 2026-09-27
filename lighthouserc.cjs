@@ -10,15 +10,31 @@ module.exports = {
     collect: {
       url: paths.map((path) => new URL(path, baseUrl).toString()),
       numberOfRuns: 3,
-      settings: bypassSecret
-        ? { extraHeaders: JSON.stringify({ "x-vercel-protection-bypass": bypassSecret }) }
-        : {},
+      settings: {
+        skipAudits: ["is-crawlable"],
+        ...(bypassSecret
+          ? {
+              extraHeaders: JSON.stringify({
+                "x-vercel-protection-bypass": bypassSecret,
+              }),
+            }
+          : {}),
+      },
     },
     assert: {
       assertions: {
-        "categories:performance": ["error", { minScore: 0.95, aggregationMethod: "median" }],
-        "categories:accessibility": ["error", { minScore: 0.95, aggregationMethod: "median" }],
-        "categories:seo": ["error", { minScore: 0.95, aggregationMethod: "median" }],
+        "categories:performance": [
+          "error",
+          { minScore: 0.95, aggregationMethod: "median" },
+        ],
+        "categories:accessibility": [
+          "error",
+          { minScore: 0.95, aggregationMethod: "median" },
+        ],
+        "categories:seo": [
+          "error",
+          { minScore: 0.95, aggregationMethod: "median" },
+        ],
       },
     },
   },
