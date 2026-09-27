@@ -65,6 +65,10 @@ export const getPostDetail = (slug: string) => {
   };
 };
 
+// 현재 글을 뺀 나머지 글을 최신순으로, 목록과 같은 번호와 톤을 붙여 반환함
+export const getOtherPosts = (slug: string) =>
+  withThumbMeta(getPosts()).filter((post) => post.slug !== slug);
+
 // 글을 연도별로 묶음
 export const groupByYear = <T extends { date: string }>(list: T[]) => {
   const groups = new Map<string, T[]>();

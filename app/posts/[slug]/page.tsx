@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXContent } from "@/components/mdx/mdx-content";
+import { Comments } from "@/components/post/comments";
+import { OtherPosts } from "@/components/post/other-posts";
 import { PostActions } from "@/components/post/post-actions";
 import { PostHeader } from "@/components/post/post-header";
 import { PostNav } from "@/components/post/post-nav";
 import { Toc } from "@/components/post/toc";
-import { getPostBySlug, getPostDetail, getPosts } from "@/lib/posts";
+import {
+  getOtherPosts,
+  getPostBySlug,
+  getPostDetail,
+  getPosts,
+} from "@/lib/posts";
 
 // 발행된 모든 글의 slug로 정적 경로를 만듦
 export function generateStaticParams() {
@@ -21,7 +28,7 @@ export async function generateMetadata({
   return { title: post.title, description: post.description };
 }
 
-// 제목 영역, 본문과 목차, 수정 제안, 이전/다음 글이 있는 글 상세 페이지를 렌더링함
+// 제목 영역, 본문과 목차, 수정 제안, 이전/다음 글, 댓글, 다른 글이 있는 글 상세 페이지를 렌더링함
 export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
   const detail = getPostDetail((await params).slug);
   if (!detail) notFound();
@@ -47,6 +54,8 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
       </div>
       <PostActions editUrl={editUrl} />
       <PostNav prev={prev} next={next} />
+      <Comments key={post.slug} />
+      <OtherPosts posts={getOtherPosts(post.slug)} />
     </article>
   );
 }
