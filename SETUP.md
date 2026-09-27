@@ -466,29 +466,18 @@ DESIGN.md 5장 "경력 블록", "아코디언"과 6장 "소개"를 그대로 구
 2. 개인 도메인 연결 (`grxxn.dev` 후보)
 3. Vercel Analytics + Speed Insights 활성화
 
-### GitHub Actions (`.github/workflows/ci.yml`)
+### GitHub Actions ✅
 
-```yaml
-name: CI
-on: [pull_request]
-jobs:
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with: { node-version: 22, cache: pnpm }
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm content
-      - run: pnpm typecheck
-      - run: pnpm lint
-      - run: pnpm build
-```
-
-- Lighthouse CI는 Vercel 프리뷰 URL 대상으로 추가 (성능/접근성 95점 이상 유지 목표)
+- `.github/workflows/ci.yml`: PR과 `main` push에서 `pnpm install --frozen-lockfile` → `content` → `typecheck` → `lint` → `build` (Node 24, 버전은 `packageManager`의 pnpm)
+- `.github/workflows/lighthouse.yml` + `lighthouserc.cjs`: Vercel 프리뷰 배포가 성공하면(`deployment_status`) 그 URL로 `/`, `/about`, `/posts/why-leave-velog`를 3회씩 측정. 성능·접근성·SEO 중앙값이 95점 미만이면 실패
+  - 프리뷰에 Deployment Protection이 켜져 있으면 Vercel의 Protection Bypass for Automation 값을 저장소 시크릿 `VERCEL_AUTOMATION_BYPASS_SECRET`에 등록한다 (`x-vercel-protection-bypass` 헤더로 전달)
+  - 리포트에 요청 헤더가 남을 수 있어 리포트 업로드(임시 공개 저장소, 아티팩트)는 켜지 않는다
 - 측정값은 소개 페이지 "성능은 숫자로 확인합니다" 항목에 채운다
-- Renovate 설정으로 Next.js 보안 패치 자동 PR
+
+### Renovate ✅
+
+- `renovate.json`: 나머지 의존성은 월요일 오전 9시 전(KST) 하나의 PR로 묶고, `next`/`eslint-config-next` 패치와 보안 취약점 알림은 일정과 관계없이 바로 PR
+- 저장소에 Renovate GitHub 앱을 설치해야 동작한다
 
 ### 글 발행 흐름
 1. `content/posts/<slug>/index.mdx` 작성 (`draft: true`)

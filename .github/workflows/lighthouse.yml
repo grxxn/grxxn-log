@@ -1,0 +1,22 @@
+name: Lighthouse
+
+# Vercel GitHub 연동이 남기는 배포 상태 이벤트로 프리뷰 배포 완료를 감지함
+on: deployment_status
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    if: >-
+      github.event.deployment_status.state == 'success' &&
+      startsWith(github.event.deployment.environment, 'Preview')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: treosh/lighthouse-ci-action@v12
+        env:
+          LHCI_BASE_URL: ${{ github.event.deployment_status.environment_url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        with:
+          configPath: ./lighthouserc.cjs

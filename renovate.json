@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Seoul",
+  "schedule": ["before 9am on monday"],
+  "packageRules": [
+    {
+      "description": "나머지 의존성은 주 1회 하나의 PR로 묶음",
+      "matchPackageNames": ["*"],
+      "groupName": "weekly dependencies",
+      "groupSlug": "weekly"
+    },
+    {
+      "description": "Next.js 패치 릴리스(보안 패치)는 기다리지 않고 바로 PR",
+      "matchPackageNames": ["next", "eslint-config-next"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "Next.js patch",
+      "groupSlug": "nextjs-patch",
+      "schedule": ["at any time"],
+      "minimumReleaseAge": "0 days",
+      "labels": ["security"]
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"],
+    "minimumReleaseAge": "0 days",
+    "labels": ["security"]
+  }
+}
