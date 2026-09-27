@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans_KR } from "next/font/google";
 import { InlineScript } from "@/components/layout/inline-script";
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-// 서체, 테마 초기화 스크립트, 헤더/푸터를 포함한 공통 레이아웃을 렌더링함
+// 서체, 테마 초기화 스크립트, 헤더/푸터, 방문·성능 측정을 포함한 공통 레이아웃을 렌더링함
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -48,6 +50,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main>{children}</main>
           <SiteFooter />
         </div>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
