@@ -20,3 +20,6 @@ jobs:
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         with:
           configPath: ./lighthouserc.cjs
+      - name: 페이지별 측정 결과 요약
+        if: always()
+        run: node scripts/lighthouse-summary.mjs .lighthouseci
