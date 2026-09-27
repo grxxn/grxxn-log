@@ -23,15 +23,18 @@ export const getPosts = () =>
 export const getPostBySlug = (slug: string) =>
   getPosts().find((post) => post.slug === slug);
 
+// 1부터 시작하는 번호에 맞춰 썸네일 톤을 deep → moss → pale 순서로 고름
+export const getThumbTone = (no: number): ThumbTone =>
+  TONES[(no - 1) % TONES.length] ?? "deep";
+
+// 번호를 두 자리 문자열로 바꿈
+export const formatThumbNo = (no: number) => String(no).padStart(2, "0");
+
 // 오래된 글부터 1번으로 매긴 번호와 썸네일 톤을 붙임
 export const withThumbMeta = <T>(list: T[]) =>
   list.map((post, i) => {
     const no = list.length - i;
-    return {
-      ...post,
-      no: String(no).padStart(2, "0"),
-      tone: TONES[(no - 1) % TONES.length] ?? "deep",
-    };
+    return { ...post, no: formatThumbNo(no), tone: getThumbTone(no) };
   });
 
 // 글을 연도별로 묶음

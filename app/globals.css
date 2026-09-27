@@ -25,12 +25,22 @@
   --color-thumb-pale-bg: var(--color-thumb-pale-bg);
   --color-thumb-pale-fg: var(--color-thumb-pale-fg);
   --font-sans: var(--font-plex-sans), system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-mono: var(--font-plex-mono), var(--font-plex-sans), ui-monospace, monospace;
 }
 
 @utility container-content {
   width: min(880px, 100% - 48px);
   margin-inline: auto;
+}
+
+@utility text-link {
+  color: var(--color-accent);
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+
+  &:hover {
+    color: var(--color-accent-hover);
+  }
 }
 
 @layer base {

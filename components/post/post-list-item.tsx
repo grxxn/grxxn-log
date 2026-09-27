@@ -27,7 +27,7 @@ export function PostListItem({
         href={href}
         className="group flex items-start gap-[18px] py-6 focus-visible:outline-offset-8 md:items-center md:gap-11 md:py-9"
       >
-        <PostThumbnail no={no} keyword={thumb} tone={tone} />
+        <PostThumbnail label={`No.${no}`} keyword={thumb} tone={tone} />
         <div className="min-w-0">
           <time
             dateTime={date}
