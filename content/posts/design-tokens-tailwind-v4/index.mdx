@@ -1,0 +1,38 @@
+---
+title: Tailwind v4와 3계층 디자인 토큰 설계
+slug: design-tokens-tailwind-v4
+date: 2026-09-18
+description: Primitive, Semantic, Tailwind 세 계층으로 디자인 토큰을 나누고 다크모드를 토큰 교체만으로 해결한 방법입니다.
+thumb: Design Tokens
+tags: [Tailwind CSS, 디자인 시스템]
+series: 블로그 제작기
+draft: false
+---
+
+## 세 계층으로 나눈 이유
+
+색 값을 컴포넌트에 바로 쓰면 다크모드를 추가할 때 모든 컴포넌트를 고쳐야 합니다. 그래서 토큰을 세 계층으로 나눴습니다.
+
+1. **Primitive**: `--moss-0`, `--green-600`처럼 값 그 자체
+2. **Semantic**: `--color-bg`, `--color-accent`처럼 역할
+3. **Tailwind**: `@theme`로 노출한 `bg-bg`, `text-accent` 클래스
+
+## 다크모드는 토큰 교체로
+
+```css title="styles/tokens.css"
+:root {
+  --color-bg: var(--moss-0);
+  --color-accent: var(--green-600);
+}
+
+[data-theme="dark"] {
+  --color-bg: #141a15;
+  --color-accent: #7fb88c;
+}
+```
+
+컴포넌트에는 `dark:` 변형이 하나도 없습니다. 테마가 바뀌면 Semantic 계층의 값만 바뀝니다.
+
+## 규칙으로 지키기
+
+컴포넌트에서는 Semantic 토큰만 쓰고, Tailwind 기본 팔레트는 `@theme`에서 `--color-*: initial`로 아예 지웠습니다. 쓰면 안 되는 클래스는 처음부터 존재하지 않습니다.
