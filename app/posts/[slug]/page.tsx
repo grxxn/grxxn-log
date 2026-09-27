@@ -16,6 +16,7 @@ import {
   getPostDetail,
   getPosts,
 } from "@/lib/posts";
+import { site } from "@/lib/site";
 
 // 발행된 모든 글의 slug로 정적 경로를 만듦
 export function generateStaticParams() {
@@ -71,7 +72,7 @@ export default async function PostPage({ params }: PageProps<"/posts/[slug]">) {
       </div>
       <PostActions editUrl={editUrl} />
       <PostNav prev={prev} next={next} />
-      <Comments key={post.slug} />
+      <Comments key={post.slug} siteUrl={site.url} />
       <OtherPosts posts={getOtherPosts(post.slug)} />
     </article>
   );

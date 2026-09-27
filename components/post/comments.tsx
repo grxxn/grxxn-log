@@ -11,16 +11,24 @@ import { getPreferredTheme, type Theme } from "@/lib/theme";
 import { readTheme, useTheme } from "@/lib/use-theme";
 
 // giscus iframe에 테마 변경을 알림
-const sendTheme = (container: HTMLElement | null, theme: Theme) => {
+const sendTheme = (
+  container: HTMLElement | null,
+  theme: Theme,
+  siteUrl: string,
+) => {
   const frame = container?.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
   frame?.contentWindow?.postMessage(
-    { giscus: { setConfig: { theme: getGiscusTheme(theme) } } },
+    { giscus: { setConfig: { theme: getGiscusTheme(theme, siteUrl) } } },
     GISCUS_ORIGIN,
   );
 };
 
+type CommentsProps = {
+  siteUrl: string;
+};
+
 // giscus 댓글을 사이트 테마와 연동해 렌더링하고 댓글 수를 제목 옆에 표시함
-export function Comments() {
+export function Comments({ siteUrl }: CommentsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [count, setCount] = useState<number>();
@@ -38,14 +46,14 @@ export function Comments() {
     }
     script.setAttribute(
       "data-theme",
-      getGiscusTheme(readTheme() ?? getPreferredTheme()),
+      getGiscusTheme(readTheme() ?? getPreferredTheme(), siteUrl),
     );
     container.append(script);
-  }, []);
+  }, [siteUrl]);
 
   useEffect(() => {
-    if (theme) sendTheme(containerRef.current, theme);
-  }, [theme]);
+    if (theme) sendTheme(containerRef.current, theme, siteUrl);
+  }, [theme, siteUrl]);
 
   useEffect(() => {
     let isThemeSynced = false;
@@ -59,7 +67,7 @@ export function Comments() {
       if (!isThemeSynced) {
         isThemeSynced = true;
         const current = readTheme();
-        if (current) sendTheme(containerRef.current, current);
+        if (current) sendTheme(containerRef.current, current, siteUrl);
       }
       if (message.commentCount !== undefined) setCount(message.commentCount);
       else if (message.error?.includes("Discussion not found")) setCount(0);
@@ -67,7 +75,7 @@ export function Comments() {
 
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
-  }, []);
+  }, [siteUrl]);
 
   return (
     <section aria-labelledby="comments-title" className="mt-16 md:mt-24">

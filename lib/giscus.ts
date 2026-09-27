@@ -21,10 +21,10 @@ export const giscusAttributes = {
 const LOOPBACK_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 
 // 사이트 테마에 맞는 giscus 테마 값을 만듦 (로컬 주소는 브라우저가 giscus.app의 접근을 막아 기본 테마를 씀)
-export const getGiscusTheme = (theme: Theme) =>
-  LOOPBACK_HOSTS.has(location.hostname)
+export const getGiscusTheme = (theme: Theme, siteUrl: string) =>
+  LOOPBACK_HOSTS.has(new URL(siteUrl).hostname)
     ? theme
-    : `${location.origin}${GISCUS_THEME_PATH}/${theme}.css`;
+    : `${siteUrl}${GISCUS_THEME_PATH}/${theme}.css`;
 
 type GiscusMessage = {
   commentCount?: number;
