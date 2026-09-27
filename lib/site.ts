@@ -4,6 +4,7 @@ type SiteConfig = {
   description: string;
   author: { name: string; github: string; email: string };
   repo: { url: string; branch: string };
+  feedPath: string;
 };
 
 export const site = {
@@ -12,4 +13,5 @@ export const site = {
   description: "만들고, 배우고, 기록합니다.",
   author: { name: "grxxn", github: "grxxn", email: "[이메일]" },
   repo: { url: "https://github.com/grxxn/grxxn-log", branch: "main" },
+  feedPath: "/feed.xml",
 } satisfies SiteConfig;

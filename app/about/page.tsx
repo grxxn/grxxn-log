@@ -5,11 +5,21 @@ import { SideProjectItem } from "@/components/about/side-project-item";
 import { WorkAccordion } from "@/components/about/work-accordion";
 import { TextLink } from "@/components/ui/text-link";
 import { about } from "@/content/about";
+import { createAlternates, createOpenGraph } from "@/lib/metadata";
 import { formatThumbNo, getPostBySlug, getThumbTone } from "@/lib/posts";
+
+const description = about.greeting.join(" ");
 
 export const metadata: Metadata = {
   title: "소개",
-  description: about.greeting.join(" "),
+  description,
+  alternates: createAlternates("/about"),
+  openGraph: createOpenGraph({
+    type: "profile",
+    title: "소개",
+    description,
+    url: "/about",
+  }),
 };
 
 type AboutSectionProps = {

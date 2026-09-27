@@ -10,7 +10,7 @@ export function SiteFooter() {
           <a href={`https://github.com/${site.author.github}`}>GitHub</a>
         </li>
         <li>
-          <a href="/feed.xml">RSS</a>
+          <a href={site.feedPath}>RSS</a>
         </li>
       </ul>
     </footer>

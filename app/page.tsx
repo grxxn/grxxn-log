@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { PostListItem } from "@/components/post/post-list-item";
 import { PublishGrass } from "@/components/post/publish-grass";
 import {
@@ -6,9 +7,20 @@ import {
   groupByYear,
   withThumbMeta,
 } from "@/lib/posts";
+import { createAlternates, createOpenGraph } from "@/lib/metadata";
 import { site } from "@/lib/site";
 
 const GRASS_WEEKS = 30;
+
+export const metadata: Metadata = {
+  alternates: createAlternates("/"),
+  openGraph: createOpenGraph({
+    type: "website",
+    title: site.name,
+    description: site.description,
+    url: "/",
+  }),
+};
 
 // 잔디와 연도별 글 목록이 있는 홈 페이지를 렌더링함
 export default function Home() {

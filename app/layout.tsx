@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans_KR } from "next/font/google";
 import { InlineScript } from "@/components/layout/inline-script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { createAlternates, createOpenGraph } from "@/lib/metadata";
 import { site } from "@/lib/site";
 import { themeScript } from "@/lib/theme";
 import "./globals.css";
@@ -22,8 +23,12 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: site.name,
+  metadataBase: new URL(site.url),
+  title: { default: site.name, template: `%s | ${site.name}` },
   description: site.description,
+  alternates: createAlternates("/"),
+  openGraph: createOpenGraph({ type: "website" }),
+  twitter: { card: "summary_large_image" },
 };
 
 // 서체, 테마 초기화 스크립트, 헤더/푸터를 포함한 공통 레이아웃을 렌더링함
