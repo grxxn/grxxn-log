@@ -257,7 +257,7 @@ next-themes 대신 Next.js 공식 가이드(`preventing-flash-before-hydration`)
 
 ---
 
-## Step 4. Velite + 글 목록 페이지 → 첫 배포
+## Step 4. Velite + 글 목록 페이지 ✅
 
 ```bash
 pnpm add -D velite concurrently rehype-pretty-code shiki rehype-slug rehype-autolink-headings remark-gfm
@@ -402,69 +402,74 @@ DESIGN.md 5장의 "잔디", "글 목록 항목", "썸네일 템플릿"을 그대
 - 연도별 그룹, 연도 라벨은 Mono
 - 상세 페이지는 우선 제목과 본문만 렌더링하는 임시 버전 (`generateStaticParams`, 없는 slug는 `notFound()`)
 
-**완료 조건:** 샘플 글 2~3개로 목록이 시안과 같은 간격으로 보이고, 프론트매터 누락 시 빌드가 실패한다. Vercel에 첫 배포.
+**완료 조건:** 샘플 글 2~3개로 목록이 시안과 같은 간격으로 보이고, 프론트매터 누락 시 빌드가 실패한다. (첫 배포는 모든 단계를 마친 뒤 Step 8에서 한다)
 
 ---
 
-## Step 5. 글 상세 페이지
+## Step 5. 글 상세 페이지 (일부 남음)
 
 DESIGN.md 6장 "글 상세"(데스크톱, 모바일, 다크)를 그대로 구현한다.
 
-- [ ] 제목 영역: `← 글 목록`, 메타(번호·날짜·읽기 시간), 제목, 시리즈, 태그
-- [ ] 본문 680px + 목차 152px 2열. 목차는 `lg:`(1024px) 이상에서만 표시
-- [ ] 모바일(768px 미만): 제목 28px, 시리즈/태그 두 줄, 이전/다음 글 세로, 로그인 버튼 전체 폭, 코드 블록 가로 스크롤
-- [ ] 목차(TOC): `post.toc` 사용, IntersectionObserver로 현재 섹션 하이라이트 (클라이언트 컴포넌트로 분리)
-- [ ] 코드 블록: 복사 버튼, 파일명 표시(`title="file.ts"`), 라인 강조. 스타일은 DESIGN.md "코드 블록"
+- [x] 제목 영역: `← 글 목록`, 메타(번호·날짜·읽기 시간), 제목, 시리즈, 태그
+- [x] 본문 680px + 목차 152px 2열. 목차는 `lg:`(1024px) 이상에서만 표시
+- [x] 모바일(768px 미만): 제목 28px, 시리즈/태그 두 줄, 이전/다음 글 세로, 로그인 버튼 전체 폭, 코드 블록 가로 스크롤
+- [x] 목차(TOC): `post.toc` 사용, IntersectionObserver로 현재 섹션 하이라이트 (클라이언트 컴포넌트로 분리)
+- [x] 코드 블록: 복사 버튼, 파일명 표시(`title="file.ts"`). 스타일은 DESIGN.md "코드 블록"
+- [ ] 코드 블록 라인 강조 스타일
 - [ ] MDX 커스텀 컴포넌트: `<Callout>`, `<CodeTabs>`, `<Demo>`
-- [ ] 읽기 시간 (`post.metadata.readingTime`)
-- [ ] 태그 페이지, 시리즈 이전/다음 글 네비게이션
-- [ ] `GitHub에서 수정 제안하기` 링크 (저장소의 해당 MDX 편집 URL), `링크 복사` 버튼
-- [ ] giscus 댓글: GitHub Discussions 활성화 → giscus 앱 설치 → 커스텀 테마 CSS로 라이트/다크 토큰 연동
-- [ ] 하단 `다른 글`: 현재 글을 뺀 목록 4개씩 페이지네이션
+- [x] 읽기 시간 (`post.metadata.readingTime`)
+- [x] 이전/다음 글 네비게이션 (날짜순)
+- [ ] 시리즈 안에서의 이전/다음 글 네비게이션
+- [ ] 태그 페이지 (도입 보류, PROJECT.md "아직 정하지 않은 것")
+- [x] `GitHub에서 수정 제안하기` 링크 (저장소의 해당 MDX 편집 URL), `링크 복사` 버튼
+- [x] giscus 댓글: GitHub Discussions 활성화 → giscus 앱 설치 → 커스텀 테마 CSS로 라이트/다크 토큰 연동
+- [x] 하단 `다른 글`: 현재 글을 뺀 목록 4개씩 페이지네이션
 - [ ] 이미지: 글 폴더에 함께 두고 `next/image`로 렌더링
 
 ---
 
-## Step 6. 소개 페이지 (`/about`)
+## Step 6. 소개 페이지 (`/about`) ✅
 
 DESIGN.md 5장 "경력 블록", "아코디언"과 6장 "소개"를 그대로 구현한다.
 
-- [ ] 인트로: 제목, 인사 문장(26px), 소개 문장, `이력서 PDF`/`GitHub`/`Email`
-- [ ] 경력: `components/about/career-item.tsx`. 회사 프로젝트는 `<dl>`로 문제/한 일/결과
-- [ ] 사이드 프로젝트: Step 4의 `post-thumbnail` 재사용
-- [ ] 일하는 방식: `components/about/work-accordion.tsx`
+- [x] 인트로: 제목, 인사 문장(26px), 소개 문장, `이력서 PDF`/`GitHub`/`Email`
+- [x] 경력: `components/about/career-item.tsx`. 회사 프로젝트는 `<dl>`로 문제/한 일/결과
+- [x] 사이드 프로젝트: Step 4의 `post-thumbnail` 재사용
+- [x] 일하는 방식: `components/about/work-accordion.tsx`
   - `<details name="work">` + `<summary>`로 구현 (같은 name이면 한 번에 하나만 열림, JS 불필요)
   - 첫 항목(AI)만 `open`
   - `+`/`−` 아이콘은 `details[open]` 상태에 맞춰 CSS로 전환
-- [ ] 경력, 프로젝트 데이터는 `content/about.ts` 같은 파일로 분리해서 페이지 코드와 섞지 않는다
-- [ ] 모바일: 경력 1열, 토큰 다이어그램 세로, 코드 `pre-wrap` (DESIGN.md 6장 "소개 모바일")
+- [x] 경력, 프로젝트 데이터는 `content/about.ts` 같은 파일로 분리해서 페이지 코드와 섞지 않는다
+- [x] 모바일: 경력 1열, 토큰 다이어그램 세로, 코드 `pre-wrap` (DESIGN.md 6장 "소개 모바일")
 
 ---
 
-## Step 6-1. 404 페이지
+## Step 6-1. 404 페이지 ✅
 
-- [ ] `app/not-found.tsx`: 로그 한 줄 + 제목 + 설명 + 링크 + 최근 글 3개 (DESIGN.md 6장 "404")
-- [ ] 로그 줄의 경로는 요청한 경로를 표시 (`usePathname` 클라이언트 컴포넌트로 분리)
-- [ ] 모바일: 제목 32px, 긴 경로는 `break-all`로 줄바꿈 (DESIGN.md 6장 "404 모바일")
+- [x] `app/not-found.tsx`: 로그 한 줄 + 제목 + 설명 + 링크 + 최근 글 3개 (DESIGN.md 6장 "404")
+- [x] 로그 줄의 경로는 요청한 경로를 표시 (`usePathname` 클라이언트 컴포넌트로 분리)
+- [x] 모바일: 제목 32px, 긴 경로는 `break-all`로 줄바꿈 (DESIGN.md 6장 "404 모바일")
 
 ---
 
-## Step 7. SEO
+## Step 7. SEO ✅
 
-- [ ] `generateMetadata`로 글별 title/description/canonical/openGraph
-- [ ] `opengraph-image.tsx`: DESIGN.md의 썸네일 템플릿 구성을 1200×630으로 (IBM Plex 폰트 파일 로드 필요)
-- [ ] `app/sitemap.ts`, `app/robots.ts`
-- [ ] `app/feed.xml/route.ts` RSS (푸터 RSS 링크와 연결)
-- [ ] JSON-LD (`BlogPosting`) 구조화 데이터
+- [x] `generateMetadata`로 글별 title/description/canonical/openGraph
+- [x] `opengraph-image.tsx`: DESIGN.md의 썸네일 템플릿 구성을 1200×630으로 (IBM Plex 폰트 파일 로드 필요)
+- [x] `app/sitemap.ts`, `app/robots.ts`
+- [x] `app/feed.xml/route.ts` RSS (푸터 RSS 링크와 연결)
+- [x] JSON-LD (`BlogPosting`) 구조화 데이터
 
 ---
 
 ## Step 8. 배포와 CI
 
 ### Vercel
-1. GitHub 저장소 연결 → 자동 배포
-2. 개인 도메인 연결 (`grxxn.dev` 후보)
-3. Vercel Analytics + Speed Insights 활성화
+
+- [ ] GitHub 저장소 연결 → 자동 배포. 첫 배포는 Vercel 기본 도메인(`*.vercel.app`)으로 한다
+- [ ] 개인 도메인 연결 (`grxxn.dev` 후보) — 추후
+- [x] Vercel Analytics + Speed Insights 코드 연결 (대시보드 활성화는 배포 후)
+- 사이트 주소는 `VERCEL_PROJECT_PRODUCTION_URL`에서 읽으므로 도메인을 바꿔도 코드 수정이 필요 없다
 
 ### GitHub Actions ✅
 
@@ -481,7 +486,7 @@ DESIGN.md 5장 "경력 블록", "아코디언"과 6장 "소개"를 그대로 구
 
 ### 글 발행 흐름
 1. `content/posts/<slug>/index.mdx` 작성 (`draft: true`)
-2. PR 생성 → 프리뷰 URL에서 확인
+2. PR 생성 → 프리뷰 URL에서 확인 (초안은 `VERCEL_ENV`가 `production`이 아닌 로컬과 프리뷰에서만 보인다)
 3. `draft: false`로 변경 후 머지 → 프로덕션 배포
 
 ---
@@ -493,10 +498,12 @@ DESIGN.md 5장 "경력 블록", "아코디언"과 6장 "소개"를 그대로 구
 - [x] Claude Code 환경 세팅
 - [x] Step 2 TS strict
 - [x] Step 3 디자인 토큰 + 서체 + 헤더/푸터
-- [ ] Step 4 Velite + 글 목록 → **첫 배포**
-- [ ] Step 5 글 상세
-- [ ] Step 6 소개 (데스크톱, 모바일)
-- [ ] Step 6-1 404 (데스크톱, 모바일)
-- [ ] Step 7 SEO
-- [ ] Step 8 CI + 도메인
+- [x] Step 4 Velite + 글 목록
+- [ ] Step 5 글 상세 (MDX 커스텀 컴포넌트, 라인 강조, 시리즈 내비게이션, 이미지 남음)
+- [x] Step 6 소개 (데스크톱, 모바일)
+- [x] Step 6-1 404 (데스크톱, 모바일)
+- [x] Step 7 SEO
+- [x] Step 8 CI (GitHub Actions, Lighthouse CI, Renovate)
+- [ ] **첫 배포** (Vercel 기본 도메인)
+- [ ] 커스텀 도메인 연결 (추후)
 - [ ] 첫 글 발행: "벨로그를 떠나 직접 만든 블로그로 옮긴 이유"

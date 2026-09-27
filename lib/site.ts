@@ -13,7 +13,7 @@ export const site = {
   name: "grxxn.log",
   url: productionHost ? `https://${productionHost}` : "http://localhost:3000",
   description: "만들고, 배우고, 기록합니다.",
-  author: { name: "grxxn", github: "grxxn", email: "[이메일]" },
+  author: { name: "grxxn", github: "grxxn", email: "devgrxxn@gmail.com" },
   repo: { url: "https://github.com/grxxn/grxxn-log", branch: "main" },
   feedPath: "/feed.xml",
 } satisfies SiteConfig;

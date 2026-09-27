@@ -12,13 +12,15 @@ module.exports = {
       numberOfRuns: 3,
       settings: {
         skipAudits: ["is-crawlable"],
-        ...(bypassSecret
-          ? {
-              extraHeaders: JSON.stringify({
+        extraHeaders: JSON.stringify({
+          "x-vercel-skip-toolbar": "1",
+          ...(bypassSecret
+            ? {
                 "x-vercel-protection-bypass": bypassSecret,
-              }),
-            }
-          : {}),
+                "x-vercel-set-bypass-cookie": "true",
+              }
+            : {}),
+        }),
       },
     },
     assert: {

@@ -10,9 +10,9 @@ const TONES = ["deep", "moss", "pale"] as const satisfies ThumbTone[];
 const DAY_MS = 24 * 60 * 60 * 1000;
 const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
 
-// 개발 환경이 아니면 초안 글을 제외함
+// Vercel 프로덕션 배포에서만 초안 글을 제외함
 const isPublished = (post: Post) =>
-  process.env.NODE_ENV === "development" || !post.draft;
+  process.env.VERCEL_ENV !== "production" || !post.draft;
 
 // 발행된 글을 최신순으로 반환함
 export const getPosts = () =>
