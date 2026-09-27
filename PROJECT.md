@@ -148,7 +148,7 @@
 | 코드 하이라이팅 | rehype-pretty-code (Shiki) | 빌드 타임 처리로 런타임 JS 없음 |
 | 스타일 | Tailwind CSS v4 + CSS 변수 디자인 토큰 | CSS-first `@theme`가 토큰 구조와 잘 맞음 |
 | 서체 | IBM Plex Sans KR + IBM Plex Mono (next/font/google) | 흔한 서체를 피하고, 한글 본문과 고정폭 메타 정보의 대비로 개성 |
-| 다크모드 | next-themes (`data-theme`) | 새로고침 시 깜빡임 없음 |
+| 다크모드 | 인라인 스크립트 + `useSyncExternalStore` (`data-theme`) | 새로고침 시 깜빡임 없음, 라이브러리 없이 공식 가이드 패턴으로 구현 |
 | 댓글 | giscus | GitHub Discussions 기반, 개발 블로그에 적합 |
 | 배포 | Vercel | Next.js 기능 무설정 지원, PR 프리뷰 URL |
 | 패키지 매니저 | pnpm | 빠른 설치, 엄격한 의존성 |
@@ -192,7 +192,8 @@
 - [x] Claude Code 환경 세팅 (권한, 훅, next-devtools-mcp, `/commit`, `/new-post`)
 - [x] `/` 라우트 = 글 목록으로 결정
 - [x] `DESIGN.md` 작성, 서체 확정 (IBM Plex)
-- [ ] SETUP.md Step 2부터 진행
+- [x] SETUP.md Step 3 (디자인 토큰, 서체, 헤더/푸터)
+- [ ] SETUP.md Step 4부터 진행
 
 ### 아직 정하지 않은 것
 - 태그별 목록(`/tags/[tag]`) 도입 여부: 태그를 누르면 그 태그의 글만 모아 보여주는 페이지. 글이 20편 정도 쌓인 뒤 도입 검토

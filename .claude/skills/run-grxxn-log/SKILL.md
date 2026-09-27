@@ -108,8 +108,8 @@ pnpm build
 - **테마 전환 직후 스크린숏은 `transition-colors` 중간 색이 찍힌다** (다크 전환 직후 버튼이 회색/반투명으로 나옴).
   `scheme`은 `document.getAnimations()`가 끝날 때까지 기다리게 해뒀다. `click`으로 토글한 뒤에는 `sleep 300`을 넣을 것.
 - **존재하지 않는 경로 이동 시 `errors`에 `status of 404` 로그가 한 줄 남는다.** 404 페이지 확인 중이면 정상.
-- **`scheme dark`는 시스템 설정만 흉내 낸다.** next-themes 도입(SETUP.md Step 3) 후에는 localStorage의 사용자 선택이
-  우선하므로, 토글 동작은 `click`으로 헤더 토글 버튼을 눌러 확인해야 한다 (아직 토글이 없어 미검증).
+- **`scheme dark`는 시스템 설정만 흉내 낸다.** localStorage에 사용자 선택이 있으면 그 값이
+  우선하므로, 토글 동작은 `click`으로 헤더 토글 버튼을 눌러 확인해야 한다.
 - **Write/Edit 후 PostToolUse 훅이 Prettier로 파일을 다시 포맷한다** (`.claude/hooks/format.mjs`).
   `sed`로 드라이버를 고칠 때는 포맷된 모양(큰따옴표, 세미콜론, 줄바꿈)을 기준으로 매칭할 것.
 - 첫 `nav`는 Turbopack이 라우트를 컴파일하느라 느릴 수 있다. `sleep` 대신 `wait-for`를 쓴다.

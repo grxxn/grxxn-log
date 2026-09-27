@@ -16,7 +16,7 @@ Next.js(App Router) + TypeScript + Velite(MDX) + Tailwind CSS v4 기반 grxxn.lo
 | 코드 하이라이팅 | rehype-pretty-code (Shiki) | 빌드 타임 하이라이팅, 런타임 JS 0 |
 | 스타일 | Tailwind CSS v4 + CSS 변수 디자인 토큰 | CSS-first `@theme`, 3계층 토큰 구조 |
 | 서체 | IBM Plex Sans KR + IBM Plex Mono (next/font/google) | 흔하지 않은 한글 서체 + 고정폭 메타 정보의 대비 |
-| 다크모드 | next-themes | FOUC 없는 테마 전환 |
+| 다크모드 | 인라인 스크립트 + `useSyncExternalStore` (직접 구현) | FOUC 없는 테마 전환, 의존성 없음 |
 | 댓글 | giscus | GitHub Discussions 기반, 개발 블로그에 적합 |
 | 배포 | Vercel | Next.js 기능 무설정 지원, PR 프리뷰 |
 | CI | GitHub Actions + Lighthouse CI | 타입/빌드/성능 회귀 방지 |
@@ -42,7 +42,7 @@ Next.js가 생성한 `CLAUDE.md`/`AGENTS.md` 관리 블록이 있다면 지우�
 
 ```
 app/
-  layout.tsx                # 폰트, ThemeProvider, 헤더/푸터
+  layout.tsx                # 폰트, 테마 스크립트, 헤더/푸터
   page.tsx                  # 글 목록 (홈 = 글 목록)
   not-found.tsx             # 404
   about/page.tsx            # 소개
@@ -112,7 +112,7 @@ export const site = {
 
 ---
 
-## Step 3. 디자인 토큰 + 서체 + 공통 레이아웃
+## Step 3. 디자인 토큰 + 서체 + 공통 레이아웃 ✅
 
 값은 DESIGN.md 2~4장을 그대로 옮긴다.
 
@@ -238,12 +238,14 @@ const plexMono = IBM_Plex_Mono({
 ### 테마
 
 ```bash
-pnpm add next-themes
 pnpm add -D @tailwindcss/typography
 ```
 
-- `ThemeProvider attribute="data-theme" defaultTheme="system"`로 감싸고 `<html suppressHydrationWarning>`
-- `components/layout/theme-toggle.tsx` (클라이언트 컴포넌트): 44×44px 아이콘 버튼, 라이트는 달/다크는 해 아이콘, 상태에 맞는 `aria-label`. 마운트 전에는 아이콘 자리만 비워 hydration 불일치를 막는다
+next-themes 대신 Next.js 공식 가이드(`preventing-flash-before-hydration`)의 패턴으로 직접 구현한다. next-themes 0.4.6은 클라이언트 컴포넌트 안에서 `<script>`를 렌더링해 React 19 dev 환경에서 경고가 나고, 필요한 코드도 짧기 때문이다.
+
+- `lib/theme.ts`: 저장 키, 시스템 설정 쿼리, `<head>`에 넣는 인라인 스크립트 (localStorage → 없으면 `prefers-color-scheme`으로 `<html data-theme>` 설정)
+- `app/layout.tsx`: `<html suppressHydrationWarning>` + `<head>`에 인라인 스크립트
+- `components/layout/theme-toggle.tsx` (클라이언트 컴포넌트): `useSyncExternalStore`로 `data-theme`을 구독하는 44×44px 아이콘 버튼, 라이트는 달/다크는 해 아이콘, 상태에 맞는 `aria-label`. 서버 스냅샷은 `null`이라 마운트 전에는 아이콘 자리만 비워 hydration 불일치를 막는다. 저장된 선택이 없으면 시스템 설정 변경을 따라간다
 
 ### 공통 레이아웃
 
@@ -501,7 +503,7 @@ jobs:
 - [x] 모든 화면 디자인 확정 → DESIGN.md (글 목록·소개·글 상세 각 데스크톱/모바일/다크, 404 데스크톱/모바일)
 - [x] Claude Code 환경 세팅
 - [x] Step 2 TS strict
-- [ ] Step 3 디자인 토큰 + 서체 + 헤더/푸터
+- [x] Step 3 디자인 토큰 + 서체 + 헤더/푸터
 - [ ] Step 4 Velite + 글 목록 → **첫 배포**
 - [ ] Step 5 글 상세
 - [ ] Step 6 소개 (데스크톱, 모바일)

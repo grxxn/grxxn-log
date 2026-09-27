@@ -1,0 +1,61 @@
+:root {
+  --moss-0: #f6f7f2;
+  --moss-50: #e9eee4;
+  --moss-100: #e1e6dc;
+  --moss-150: #dde2d8;
+  --moss-200: #c9d3c3;
+  --moss-500: #6b786e;
+  --moss-600: #5e6b61;
+  --moss-900: #1b211c;
+
+  --green-50: #eef3ea;
+  --green-100: #e6ece0;
+  --green-200: #cfe0c6;
+  --green-300: #a9c6a0;
+  --green-600: #2f6b3f;
+  --green-700: #2f5a3a;
+  --green-750: #1f4a2b;
+  --green-800: #23472e;
+  --green-900: #1e3a26;
+}
+
+:root {
+  color-scheme: light;
+
+  --color-bg: var(--moss-0);
+  --color-bg-subtle: var(--moss-50);
+  --color-fg: var(--moss-900);
+  --color-fg-muted: var(--moss-600);
+  --color-fg-subtle: var(--moss-500);
+  --color-border: var(--moss-150);
+  --color-border-strong: var(--moss-200);
+  --color-accent: var(--green-600);
+  --color-accent-hover: var(--green-750);
+  --color-grass-0: var(--moss-100);
+  --color-grass-1: var(--green-300);
+  --color-grass-2: var(--green-600);
+
+  --color-thumb-deep-bg: var(--green-800);
+  --color-thumb-deep-fg: var(--green-50);
+  --color-thumb-moss-bg: var(--green-200);
+  --color-thumb-moss-fg: var(--green-900);
+  --color-thumb-pale-bg: var(--green-100);
+  --color-thumb-pale-fg: var(--green-700);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: #141a15;
+  --color-bg-subtle: #1d251f;
+  --color-fg: #e6ece0;
+  --color-fg-muted: #9aa89d;
+  --color-fg-subtle: #7e8c81;
+  --color-border: #2a342c;
+  --color-border-strong: #36423a;
+  --color-accent: #7fb88c;
+  --color-accent-hover: #9acba5;
+  --color-grass-0: #232c25;
+  --color-grass-1: #3e6b48;
+  --color-grass-2: #7fb88c;
+}
