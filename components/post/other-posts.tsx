@@ -49,7 +49,7 @@ export function OtherPosts({ posts }: OtherPostsProps) {
           다른 글
         </h2>
         <Link href="/" className="py-2.5 text-sm text-fg-muted md:py-0">
-          전체 보기
+          전체 글 보기
         </Link>
       </div>
       <div className="mt-2 md:mt-5">
