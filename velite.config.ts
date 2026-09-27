@@ -13,6 +13,7 @@ const posts = defineCollection({
     .object({
       title: s.string().max(99),
       slug: s.slug("posts"),
+      path: s.path(),
       date: s.isodate(),
       updated: s.isodate().optional(),
       description: s.string().max(200),

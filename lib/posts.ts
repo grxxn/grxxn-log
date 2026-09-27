@@ -1,4 +1,5 @@
 import { posts, type Post } from "#site/content";
+import { site } from "./site";
 
 export type { Post };
 
@@ -36,6 +37,33 @@ export const withThumbMeta = <T>(list: T[]) =>
     const no = list.length - i;
     return { ...post, no: formatThumbNo(no), tone: getThumbTone(no) };
   });
+
+// 글 상세에 필요한 번호, 이전/다음 글, 시리즈 순서, 수정 제안 주소를 함께 찾음
+export const getPostDetail = (slug: string) => {
+  const list = withThumbMeta(getPosts());
+  const index = list.findIndex((post) => post.slug === slug);
+  const post = list[index];
+  if (!post) return undefined;
+
+  const seriesPosts = post.series
+    ? list.filter((item) => item.series === post.series).reverse()
+    : [];
+  const series = post.series
+    ? {
+        name: post.series,
+        index: seriesPosts.findIndex((item) => item.slug === slug) + 1,
+        total: seriesPosts.length,
+      }
+    : undefined;
+
+  return {
+    post,
+    prev: list[index + 1],
+    next: list[index - 1],
+    series,
+    editUrl: `${site.repo.url}/edit/${site.repo.branch}/content/${post.path}/index.mdx`,
+  };
+};
 
 // 글을 연도별로 묶음
 export const groupByYear = <T extends { date: string }>(list: T[]) => {
