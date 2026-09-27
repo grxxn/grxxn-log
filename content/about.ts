@@ -62,7 +62,7 @@ export const about = {
   links: [
     { label: "이력서 PDF", href: "/resume.pdf" },
     { label: "GitHub", href: "https://github.com/grxxn" },
-    { label: "Email", href: "mailto:[이메일]" },
+    { label: "Email", href: "mailto:devgrxxn@gmail.com" },
   ],
   careers: [
     {

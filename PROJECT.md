@@ -193,7 +193,15 @@
 - [x] `/` 라우트 = 글 목록으로 결정
 - [x] `DESIGN.md` 작성, 서체 확정 (IBM Plex)
 - [x] SETUP.md Step 3 (디자인 토큰, 서체, 헤더/푸터)
-- [ ] SETUP.md Step 4부터 진행
+- [x] SETUP.md Step 4 (Velite, 글 목록, 썸네일, 잔디)
+- [x] SETUP.md Step 5 글 상세 주요 기능 (목차, 코드 블록, 이전/다음 글, giscus, 다른 글)
+- [x] SETUP.md Step 6, 6-1 (소개, 404)
+- [x] SETUP.md Step 7 (메타데이터, OG 이미지, sitemap, RSS, JSON-LD)
+- [x] CI (GitHub Actions, Lighthouse CI), Renovate, Vercel Analytics/Speed Insights
+- [ ] Vercel 기본 도메인으로 첫 배포
+- [ ] 첫 글 "벨로그를 떠나 직접 만든 블로그로 옮긴 이유" 발행
+- [ ] Step 5 남은 항목: MDX 커스텀 컴포넌트(Callout, CodeTabs, Demo), 라인 강조, 시리즈 내비게이션, 글 이미지
+- [ ] 커스텀 도메인 연결 (추후)
 
 ### 아직 정하지 않은 것
 - 태그별 목록(`/tags/[tag]`) 도입 여부: 태그를 누르면 그 태그의 글만 모아 보여주는 페이지. 글이 20편 정도 쌓인 뒤 도입 검토
