@@ -1,0 +1,65 @@
+import { posts, type Post } from "#site/content";
+
+export type { Post };
+
+export type ThumbTone = "deep" | "moss" | "pale";
+
+const TONES = ["deep", "moss", "pale"] as const satisfies ThumbTone[];
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
+
+// 개발 환경이 아니면 초안 글을 제외함
+const isPublished = (post: Post) =>
+  process.env.NODE_ENV === "development" || !post.draft;
+
+// 발행된 글을 최신순으로 반환함
+export const getPosts = () =>
+  posts
+    .filter(isPublished)
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+
+// slug로 글 하나를 찾음
+export const getPostBySlug = (slug: string) =>
+  getPosts().find((post) => post.slug === slug);
+
+// 오래된 글부터 1번으로 매긴 번호와 썸네일 톤을 붙임
+export const withThumbMeta = <T>(list: T[]) =>
+  list.map((post, i) => {
+    const no = list.length - i;
+    return {
+      ...post,
+      no: String(no).padStart(2, "0"),
+      tone: TONES[(no - 1) % TONES.length] ?? "deep",
+    };
+  });
+
+// 글을 연도별로 묶음
+export const groupByYear = <T extends { date: string }>(list: T[]) => {
+  const groups = new Map<string, T[]>();
+  for (const post of list) {
+    const year = post.date.slice(0, 4);
+    groups.set(year, [...(groups.get(year) ?? []), post]);
+  }
+  return [...groups].map(([year, items]) => ({ year, posts: items }));
+};
+
+// 날짜 문자열을 1970-01-01부터 센 일 수로 바꿈
+const toDayNumber = (isoDate: string) =>
+  Math.floor(Date.parse(isoDate.slice(0, 10)) / DAY_MS);
+
+// 그 날이 속한 주의 월요일을 일 수로 반환함
+const toWeekStart = (day: number) => day - ((day + 3) % 7);
+
+// 최근 N주 동안 주별 발행 수를 오래된 주부터 반환함
+export const getPublishGrass = (weeks: number) => {
+  const today = Math.floor((Date.now() + KST_OFFSET_MS) / DAY_MS);
+  const firstWeek = toWeekStart(today) - (weeks - 1) * 7;
+  const counts = Array.from({ length: weeks }, () => 0);
+
+  for (const post of getPosts()) {
+    const index = (toWeekStart(toDayNumber(post.date)) - firstWeek) / 7;
+    if (index >= 0 && index < weeks) counts[index] = (counts[index] ?? 0) + 1;
+  }
+  return counts;
+};
